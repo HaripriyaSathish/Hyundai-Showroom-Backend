@@ -19,15 +19,20 @@ class Lead(models.Model):
     SOURCE_CHOICES = [
         ('hero', 'Hero — Get Free Quote'),
         ('contact', 'Contact — Send an Enquiry'),
+        ('test_drive', 'Book Test Drive Popup'),
     ]
 
     name = models.CharField(max_length=120)
     mobile = models.CharField(max_length=10)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, blank=True, default='')
+    email = models.EmailField(
+        blank=True, default='',
+        help_text="Optional — collected via the Book Test Drive popup.",
+    )
     interested_model = models.CharField(max_length=100)
     preferred_contact_time = models.CharField(
         max_length=50, choices=CONTACT_TIME_CHOICES, blank=True,
-        help_text="Only used by the Hero quote form. Left blank for Contact-form leads.",
+        help_text="Only used by the Hero quote form. Left blank for other sources.",
     )
     message = models.TextField(
         blank=True,

@@ -54,6 +54,7 @@ class CarModelAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Basics", {"fields": ("name", "category_label", "order", "is_active")}),
         ("Image", {"fields": ("image", "image_alt", "image_preview_large")}),
+        ("Detail Popup Background (optional)", {"fields": ("detail_image", "detail_image_alt")}),
         ("Pricing", {"fields": ("price",)}),
         ("Specs", {"fields": ("mileage_label", "transmission_label", "fuel_type_label")}),
         ("Meta", {"fields": ("created_at",)}),

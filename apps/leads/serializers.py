@@ -6,12 +6,14 @@ class LeadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lead
         fields = [
-            'id', 'name', 'mobile', 'city', 'interested_model',
+            'id', 'name', 'mobile', 'city', 'email', 'interested_model',
             'preferred_contact_time', 'message', 'source',
             'status', 'created_at',
         ]
         read_only_fields = ['id', 'status', 'created_at']
         extra_kwargs = {
+            'city': {'required': False, 'allow_blank': True},
+            'email': {'required': False, 'allow_blank': True},
             'preferred_contact_time': {'required': False, 'allow_blank': True},
             'message': {'required': False, 'allow_blank': True},
             'source': {'required': False},

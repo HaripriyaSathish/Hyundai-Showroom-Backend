@@ -5,7 +5,7 @@ from .models import Lead
 @admin.register(Lead)
 class LeadAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'mobile', 'city', 'interested_model', 'source',
+        'name', 'mobile', 'email', 'city', 'interested_model', 'source',
         'preferred_contact_time', 'status', 'email_sent', 'created_at',
     )
     list_filter = ('source', 'status', 'interested_model', 'created_at')

@@ -20,11 +20,13 @@ class FeaturedModelSerializer(serializers.ModelSerializer):
 
 class CarModelSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    detail_image = serializers.SerializerMethodField()
 
     class Meta:
         model = CarModel
         fields = [
-            "name", "category_label", "image", "image_alt", "price",
+            "name", "category_label", "image", "image_alt",
+            "detail_image", "detail_image_alt", "price",
             "mileage_label", "transmission_label", "fuel_type_label",
         ]
 
@@ -32,6 +34,14 @@ class CarModelSerializer(serializers.ModelSerializer):
         if obj.image:
             try:
                 return obj.image.url
+            except ValueError:
+                return None
+        return None
+
+    def get_detail_image(self, obj):
+        if obj.detail_image:
+            try:
+                return obj.detail_image.url
             except ValueError:
                 return None
         return None

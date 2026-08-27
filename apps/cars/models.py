@@ -71,12 +71,6 @@ class CarModelsSection(models.Model):
 
 
 class CarModel(models.Model):
-    """
-    One car card in the models carousel (e.g. "Hyundai Creta").
-    Fully admin-managed — add, edit, remove, or reorder any number of
-    cars; the frontend renders them in a continuously auto-scrolling
-    right-to-left carousel.
-    """
 
     name = models.CharField(max_length=80, help_text="e.g. 'Hyundai Creta'")
     category_label = models.CharField(
@@ -87,6 +81,25 @@ class CarModel(models.Model):
         max_length=120,
         blank=True,
         help_text="SEO alt text for the car image, e.g. 'Hyundai Creta SUV'.",
+    )
+    detail_image = models.ImageField(
+        upload_to="car_models_detail/",
+        blank=True,
+        null=True,
+        help_text=(
+            "Optional wide lifestyle/scenic photo shown as the background in the "
+            "car's detail popup (e.g. car parked against a scenic backdrop). "
+            "Falls back to the regular gradient card image if left blank."
+        ),
+    )
+    detail_image_alt = models.CharField(
+        max_length=150,
+        blank=True,
+        help_text=(
+            "SEO alt text for the detail popup's lifestyle photo, e.g. "
+            "'Hyundai Alcazar parked outside a grand estate'. Falls back to "
+            "the regular image alt text if left blank."
+        ),
     )
 
     price = models.DecimalField(
