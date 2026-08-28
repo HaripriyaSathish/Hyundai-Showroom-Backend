@@ -205,14 +205,37 @@ class SocialLinkSerializer(serializers.ModelSerializer):
 
 class FooterSectionSerializer(serializers.ModelSerializer):
     social_links = serializers.SerializerMethodField()
+    privacy_policy_file_url = serializers.SerializerMethodField()
+    terms_conditions_file_url = serializers.SerializerMethodField()
 
     class Meta:
         model = FooterSection
         fields = [
             "description", "copyright_text",
             "privacy_policy_url", "terms_url", "social_links",
+            "privacy_policy_file_url", "terms_conditions_file_url",
         ]
 
     def get_social_links(self, obj):
         active = SocialLink.objects.filter(is_active=True)
-        return SocialLinkSerializer(active, many=True).data        
+        return SocialLinkSerializer(active, many=True).data
+
+    def get_privacy_policy_file_url(self, obj):
+        if obj.privacy_policy_file:
+            try:
+                request = self.context.get("request")
+                url = obj.privacy_policy_file.url
+                return request.build_absolute_uri(url) if request else url
+            except ValueError:
+                return None
+        return None
+
+    def get_terms_conditions_file_url(self, obj):
+        if obj.terms_conditions_file:
+            try:
+                request = self.context.get("request")
+                url = obj.terms_conditions_file.url
+                return request.build_absolute_uri(url) if request else url
+            except ValueError:
+                return None
+        return None      

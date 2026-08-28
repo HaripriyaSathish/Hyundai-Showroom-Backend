@@ -275,7 +275,17 @@ class ContactSectionAdmin(admin.ModelAdmin):
 class FooterSectionAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Text", {"fields": ("description", "copyright_text")}),
-        ("Legal links", {"fields": ("privacy_policy_url", "terms_url")}),
+        (
+            "Legal documents (recommended)",
+            {
+                "fields": ("privacy_policy_file", "terms_conditions_file"),
+                "description": "Upload a PDF or Word document. Clicking the footer link on the live site will open this file directly in a new tab.",
+            },
+        ),
+        (
+            "Legal links (fallback — only used if no file is uploaded above)",
+            {"fields": ("privacy_policy_url", "terms_url")},
+        ),
     )
     readonly_fields = ("updated_at",)
 
@@ -284,7 +294,6 @@ class FooterSectionAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
-
 
 @admin.register(SocialLink)
 class SocialLinkAdmin(admin.ModelAdmin):

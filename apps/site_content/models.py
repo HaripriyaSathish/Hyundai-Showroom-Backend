@@ -1,5 +1,5 @@
 from django.db import models
-
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
 class HeroContent(models.Model):
     """
@@ -660,9 +660,30 @@ class FooterSection(models.Model):
     copyright_text = models.CharField(
         max_length=150, default="© 2026 Hyundai Susee Showroom. All rights reserved."
     )
+
+    # Kept for backward compatibility / manual override — leave as "#" if
+    # you're using the uploaded documents below instead.
     privacy_policy_url = models.CharField(max_length=200, default="#")
     terms_url = models.CharField(max_length=200, default="#")
 
+    # NEW — upload the actual Privacy Policy / Terms & Conditions
+    # document (PDF or Word) here. When a file is uploaded, the
+    # frontend opens it directly in a new tab instead of using the
+    # URL fields above.
+    privacy_policy_file = models.FileField(
+        upload_to="legal_docs/",
+        storage=RawMediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+        help_text="Upload the Privacy Policy as a PDF or Word document.",
+    )
+    terms_conditions_file = models.FileField(
+        upload_to="legal_docs/",
+        storage=RawMediaCloudinaryStorage(),
+        blank=True,
+        null=True,
+        help_text="Upload the Terms & Conditions as a PDF or Word document.",
+    )
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

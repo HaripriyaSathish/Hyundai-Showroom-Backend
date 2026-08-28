@@ -101,4 +101,4 @@ class FooterView(APIView):
 
     def get(self, request):
         section = FooterSection.get_solo()
-        return Response(FooterSectionSerializer(section).data)    
+        return Response(FooterSectionSerializer(section, context={"request": request}).data)
