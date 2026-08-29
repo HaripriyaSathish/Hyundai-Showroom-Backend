@@ -38,6 +38,14 @@ class Lead(models.Model):
         blank=True,
         help_text="Optional message — only used by the Contact 'Send an Enquiry' form.",
     )
+    # NEW — set when the enquiry originated from clicking "Claim Offer" on
+    # a specific offer card. Blank for enquiries not tied to any offer.
+    offer_interested = models.CharField(
+        max_length=120,
+        blank=True,
+        default='',
+        help_text="Name of the offer the customer clicked 'Claim Offer' on, if any (e.g. 'Cash Discount').",
+    )
     source = models.CharField(
         max_length=20, choices=SOURCE_CHOICES, default='hero',
         help_text="Which form on the site this lead came from.",

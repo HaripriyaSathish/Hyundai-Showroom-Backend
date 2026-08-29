@@ -7,7 +7,7 @@ class LeadSerializer(serializers.ModelSerializer):
         model = Lead
         fields = [
             'id', 'name', 'mobile', 'city', 'email', 'interested_model',
-            'preferred_contact_time', 'message', 'source',
+            'preferred_contact_time', 'message', 'offer_interested', 'source',
             'status', 'created_at',
         ]
         read_only_fields = ['id', 'status', 'created_at']
@@ -16,6 +16,7 @@ class LeadSerializer(serializers.ModelSerializer):
             'email': {'required': False, 'allow_blank': True},
             'preferred_contact_time': {'required': False, 'allow_blank': True},
             'message': {'required': False, 'allow_blank': True},
+            'offer_interested': {'required': False, 'allow_blank': True},
             'source': {'required': False},
         }
 
